@@ -1,0 +1,31 @@
+#container {
+  padding: 30px 70px 120px 70px;
+}
+
+#add {
+  margin: 10px 0 5px 3px;
+}
+
+#save {
+  margin: 20px 0 0 3px;
+}
+
+a {
+  font-size: 13px;
+}
+
+rgb-string-color-picker {
+  height: 120px;
+  width: 120px;
+  padding-top: 2px;
+}
+
+rgb-string-color-picker::part(saturation-pointer) {
+  height: 20px;
+  width: 20px;
+}
+
+rgb-string-color-picker::part(hue-pointer) {
+  width: 12px;
+  border-radius: 3px;
+}
