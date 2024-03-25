@@ -6,15 +6,19 @@
   </head>
   <body>
     <div id="container">
-      <table id="conditions">
+      <table id="conditions" class="table">
         <tr>
           <th>Wordspace ID</th>
           <th>Color</th>
           <th></th>
         </tr>
       </table>
-      <div><a href="#" id="add">add new condition</a></div>
-      <button id="save">save</button>
+      <div class="w-full flex justify-center">
+        <button id="add" class="btn btn-ghost">add new condition</button>
+      </div>
+      <div class="w-full flex justify-end">
+        <button id="save" class="btn btn-primary mt-3">save</button>
+      </div>
     </div>
     <script type="module" src="/src/option.ts"></script>
   </body>

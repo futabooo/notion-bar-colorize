@@ -15,7 +15,8 @@ const manifest = defineManifest({
   },
   action: {
     default_icon: "icons/icon-128.png",
-    default_title: "example",
+    default_title: "Notion Bar Colorize",
+    default_popup: "src/option.html",
   },
   background: {
     service_worker: "src/background.ts",
