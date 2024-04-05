@@ -28,6 +28,12 @@ TBD
 3. Run `npm run build` to build the project.
 4. Load the `dist` folder into Chrome in `chrome://extensions/`.
 
+or
+
+1. Download notion-bar-colorize.zip from [Releases](https://github.com/futabooo/notion-bar-colorize/releases)
+2. Unzip the file
+3. Load the `dist` folder into Chrome in `chrome://extensions/`.
+
 # License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
