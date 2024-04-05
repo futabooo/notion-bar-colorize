@@ -1,0 +1,5 @@
+[tagpr]
+	vPrefix = false
+	releaseBranch = main
+	versionFile = vite.config.ts,package.json
+    release = false
