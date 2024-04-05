@@ -28,3 +28,4 @@ jobs:
         uses: ./.github/actions/release
         with:
           tag: ${{ github.ref_name }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}

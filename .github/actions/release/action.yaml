@@ -2,6 +2,9 @@ name: Release
 description: create a GitHub Release and upload artifacts
 
 inputs:
+  github_token:
+    description: "GitHub token to request GitHub API"
+    required: true
   tag:
     description: "The tag name of the release"
     required: true
@@ -18,12 +21,15 @@ runs:
         node-version: 18
 
     - name: Install dependencies
+      shell: bash
       run: npm ci
 
     - name: Build project
+      shell: bash
       run: npm run build
 
     - name: Zip artifacts
+      shell: bash
       run: |
         zip -r notoin-bar-colorize.zip dist/
 
@@ -33,3 +39,4 @@ runs:
         files: notoin-bar-colorize.zip
         body_path: CHANGELOG.md
         tag_name: ${{ inputs.tag }}
+        token: ${{ inputs.github_token }}
