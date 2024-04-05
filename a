@@ -1,0 +1,11 @@
+create release workflow
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch create-release-workflow
+# Changes to be committed:
+#	new file:   .github/actions/release/action.yaml
+#	new file:   .github/workflows/tagpr.yaml
+#	new file:   .tagpr
+#	modified:   package.json
+#
