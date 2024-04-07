@@ -19,7 +19,7 @@ Browser extension for changing Notion topbar and sidebar color
 
 ## Chrome Web Store
 
-TBD
+[Notion Bar Colorize](https://chromewebstore.google.com/detail/notion-bar-colorize/mhgeheokbgcnefpafddmifnhgmhnnpfe?hl=en&authuser=0)
 
 ## Load unpacked
 
