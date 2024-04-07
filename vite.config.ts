@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 
 const manifest = defineManifest({
   manifest_version: 3,
-  description: "Change Notion sidebar and topbar color",
+  description: "Change Notion topbar and sidebar color",
   name: "Notion Bar Colorize",
   version: "1.0.0",
   author: "futabooo",
