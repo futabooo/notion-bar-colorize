@@ -5,7 +5,7 @@ const manifest = defineManifest({
   manifest_version: 3,
   description: "Change Notion topbar and sidebar color",
   name: "Notion Bar Colorize",
-  version: "1.0.0",
+  version: "1.0.1",
   author: "futabooo",
   icons: {
     "16": "icons/icon-16.png",
