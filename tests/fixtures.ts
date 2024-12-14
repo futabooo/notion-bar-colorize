@@ -17,7 +17,8 @@ export const test = base.extend<{
     const pathToExtension = path.join(projectRoot, "dist");
     console.log(pathToExtension);
     const context = await chromium.launchPersistentContext("", {
-      headless: false,
+      headless: true,
+      channel: "chromium",
       args: [
         `--disable-extensions-except=${pathToExtension}`,
         `--load-extension=${pathToExtension}`,

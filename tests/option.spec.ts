@@ -4,7 +4,7 @@ test.describe("option.html tests", () => {
   test.beforeEach(async ({ page, extensionId }) => {
     await page.goto(`chrome-extension://${extensionId}/src/option.html`);
     // 非同期でchrome.storage.sync.getが呼ばれてawaitしてないので待つ
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1000);
   });
 
   test("option popup page", async ({ page, extensionId }) => {
