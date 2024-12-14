@@ -1,4 +1,4 @@
-name: Release
+name: Create GitHub Release
 description: create a GitHub Release and upload artifacts
 
 inputs:
@@ -13,10 +13,10 @@ runs:
   using: "composite"
   steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
     - name: Set up Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
       with:
         node-version: 22.6
 
@@ -34,7 +34,7 @@ runs:
         zip -r notoin-bar-colorize.zip dist/
 
     - name: Release
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@7b4da11513bf3f43f9999e90eabced41ab8bb048 # v2.2.0
       with:
         files: notoin-bar-colorize.zip
         body_path: CHANGELOG.md
