@@ -42,7 +42,7 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy playwright-report --project-name=notion-bar-colorize
 
-      - name: print deployment-url
+      - name: Comment on PR with deployment URL
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.number }}
