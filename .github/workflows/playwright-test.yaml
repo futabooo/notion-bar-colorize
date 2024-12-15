@@ -43,6 +43,7 @@ jobs:
           command: pages deploy playwright-report --project-name=notion-bar-colorize
 
       - name: Comment on PR with deployment URL
+        if: ${{ github.event_name == 'pull_request' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.number }}
