@@ -42,6 +42,11 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy playwright-report --project-name=notion-bar-colorize
 
+      - name: print wrangler command output
+        env:
+          CMD_OUTPUT: ${{ steps.deploy.outputs.command-output }}
+        run: echo $CMD_OUTPUT
+
       - name: print pages-deployment-alias-url
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
