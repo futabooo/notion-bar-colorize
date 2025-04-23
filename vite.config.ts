@@ -1,4 +1,5 @@
 import { crx, defineManifest } from "@crxjs/vite-plugin";
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 
 const manifest = defineManifest({
@@ -36,5 +37,5 @@ const manifest = defineManifest({
 });
 
 export default defineConfig({
-  plugins: [crx({ manifest })],
+  plugins: [crx({ manifest }), tailwindcss()],
 });
