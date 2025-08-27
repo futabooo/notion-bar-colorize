@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.1.2](https://github.com/futabooo/notion-bar-colorize/compare/1.1.1...1.1.2) - 2025-08-27
+
 ## [1.1.1](https://github.com/futabooo/notion-bar-colorize/compare/1.1.0...1.1.1) - 2025-08-27
 - fix actions by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/102
 
