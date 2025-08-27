@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.1.1](https://github.com/futabooo/notion-bar-colorize/compare/1.1.0...1.1.1) - 2025-08-27
+- fix actions by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/102
+
 ## [1.1.0](https://github.com/futabooo/notion-bar-colorize/compare/1.0.1...1.1.0) - 2025-08-27
 - fix release workflow by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/20
 - Configure Renovate by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/22
