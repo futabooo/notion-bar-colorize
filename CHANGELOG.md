@@ -1,5 +1,78 @@
 # Changelog
 
+## [1.1.0](https://github.com/futabooo/notion-bar-colorize/compare/1.0.1...1.1.0) - 2025-08-27
+- fix release workflow by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/20
+- Configure Renovate by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/22
+- modify renovate by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/26
+- Update Node.js to v22.12.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/23
+- PlaywrightによるE2Eテストの追加 by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/27
+- PlaywrightのテストレポートをCloudflare PagesにデプロイするGithubActionsを追加 by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/28
+- fix test workflow by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/29
+- Update dependency vite to v6.0.6 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/32
+- Update dependency daisyui to v4.12.23 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/33
+- Update dependency tailwindcss to v3.4.17 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/31
+- Update dependency @types/node to v22.10.3 - autoclosed by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/34
+- Update dependency @types/chrome to ^0.0.289 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/35
+- Update dependency @types/node to v22.10.5 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/36
+- Update dependency vite to v6.0.7 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/37
+- Update dependency @types/chrome to ^0.0.290 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/39
+- Update Songmu/tagpr action to v1.5.1 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/40
+- Update softprops/action-gh-release action to v2.2.1 - autoclosed by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/41
+- Update cloudflare/wrangler-action action to v3.13.1 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/47
+- Update dependency @crxjs/vite-plugin to v2.0.0-beta.31 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/38
+- Update dependency @types/chrome to ^0.0.304 - autoclosed by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/43
+- Update dependency typescript to v5.7.3 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/44
+- Update dependency postcss to v8.5.1 - autoclosed by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/46
+- Update dependency @types/node to v22.13.1 - autoclosed by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/45
+- Update dependency vite to v6.1.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/48
+- Update dependency @playwright/test to v1.50.1 - autoclosed by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/50
+- Update actions/setup-node action to v4.2.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/51
+- Update Node.js to v22.13.1 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/42
+- Update dependency @types/chrome to ^0.0.313 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/59
+- Update dependency tailwindcss to v4 daisyUI v5 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/52
+- Update cloudflare/wrangler-action action to v3.14.1 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/54
+- Update dependency vite to v6.3.2 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/57
+- Update dependency @crxjs/vite-plugin to v2.0.0-beta.32 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/61
+- Update dependency typescript to v5.8.3 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/62
+- Update dependency autoprefixer to v10.4.21 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/64
+- Update dependency @types/chrome to ^0.0.316 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/65
+- Update softprops/action-gh-release action to v2.2.2 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/66
+- update nodejs to v22.14.0 by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/67
+- Update Songmu/tagpr action to v1.6.1 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/68
+- Update dependency vite to v6.3.5 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/72
+- Update dependency @playwright/test to v1.52.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/71
+- Update dependency daisyui to v5.0.43 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/70
+- Update dependency @types/chrome to ^0.0.326 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/73
+- Update tailwindcss monorepo to v4.1.8 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/74
+- Update dependency @crxjs/vite-plugin to v2.0.0-beta.33 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/75
+- Update Node.js to v22.16.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/63
+- Update actions/setup-node action to v4.4.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/69
+- Update softprops/action-gh-release action to v2.3.2 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/76
+- Update dependency @crxjs/vite-plugin to v2.0.2 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/77
+- Update tailwindcss monorepo to v4.1.10 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/79
+- Update Songmu/tagpr action to v1.7.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/80
+- Update Node.js to v22.17.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/82
+- Update dependency @types/chrome to ^0.0.329 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/84
+- Update dependency @playwright/test to v1.53.2 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/78
+- Update tailwindcss monorepo to v4.1.11 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/83
+- Update dependency @types/node to v22.16.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/56
+- Update dependency daisyui to v5.0.50 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/85
+- Update dependency @playwright/test to v1.54.2 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/88
+- Update dependency typescript to v5.9.2 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/91
+- Update actions/checkout action to v5 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/93
+- Update actions/upload-pages-artifact action to v4 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/95
+- Update tailwindcss monorepo to v4.1.12 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/94
+- Update dependency @crxjs/vite-plugin to v2.2.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/89
+- Update dependency vite to v7 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/81
+- Update dependency @types/chrome to ^0.1.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/86
+- Update Node.js to v22.18.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/90
+- Update dependency @types/node to v22.18.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/87
+- Update dependency @playwright/test to v1.55.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/96
+- peekに対応 by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/98
+- オプションウィンドウのレイアウトがおかしくなっていたので修正 by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/99
+- update by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/100
+- update by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/101
+
 ## [1.0.1](https://github.com/futabooo/notion-bar-colorize/compare/1.0.0...1.0.1) - 2024-12-13
 - READMEのinstall方法をアップデート by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/16
 - manifestのdiscriptionの文言を修正 by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/17
