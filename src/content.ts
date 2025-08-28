@@ -57,8 +57,8 @@ const changeSidebarColor = async () => {
       bar.style.backgroundColor = rgbStr;
 
       // sidebarを常に非表示としている場合の対応
-      let firstChild = bar.children[0] as HTMLDivElement;
-      firstChild.style.backgroundColor = rgbStr;
+      let child = bar.children[1] as HTMLDivElement;
+      child.style.backgroundColor = rgbStr;
     } else {
       // 設定がない場合はデフォルトの色に戻す
       const isDark = document.body.classList.contains("dark");
