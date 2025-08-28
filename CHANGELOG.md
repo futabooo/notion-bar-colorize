@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.1.3](https://github.com/futabooo/notion-bar-colorize/compare/1.1.2...1.1.3) - 2025-08-28
+- sidebarが常に非表示の時に色が適応されるようにする by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/105
+
 ## [1.1.2](https://github.com/futabooo/notion-bar-colorize/compare/1.1.1...1.1.2) - 2025-08-27
 
 ## [1.1.1](https://github.com/futabooo/notion-bar-colorize/compare/1.1.0...1.1.1) - 2025-08-27
