@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.3](https://github.com/futabooo/notion-bar-colorize/compare/1.1.2...1.1.3) - 2025-09-15
+- sidebarが常に非表示の時に色が適応されるようにする by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/105
+- Update dependency daisyui to v5.1.10 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/97
+- Update dependency vite to v7.1.5 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/110
+- Update dependency @types/chrome to v0.1.9 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/108
+- Update dependency @types/node to v22.18.1 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/109
+- Update actions/setup-node action to v5 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/113
+- Update tailwindcss monorepo to v4.1.13 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/112
+- Update softprops/action-gh-release action to v2.3.3 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/114
+- Update Songmu/tagpr action to v1.9.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/111
+- Update dependency @types/chrome to v0.1.11 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/115
+- Update dependency daisyui to v5.1.12 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/117
+
 ## [1.1.2](https://github.com/futabooo/notion-bar-colorize/compare/1.1.1...1.1.2) - 2025-08-27
 
 ## [1.1.1](https://github.com/futabooo/notion-bar-colorize/compare/1.1.0...1.1.1) - 2025-08-27
