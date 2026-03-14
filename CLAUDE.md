@@ -27,7 +27,7 @@ Chrome Extension (Manifest v3) with three main components:
 
 **Data flow:** Options UI → `chrome.storage.sync` ← Content Script (reads on navigation events triggered by background)
 
-**Key types** (`src/types.ts`): `Condition` (workspaceId + color), `Color` (r/g/b), `Theme` (topbar/sidebar/text colors)
+**Key types** (`src/types.ts`): `Condition` (workspaceId + color + optional textColor), `Color` (r/g/b), `Theme` (topbar/sidebar/text colors)
 
 **Build tooling:** Vite with `@crxjs/vite-plugin` handles extension packaging. The manifest is defined inline in `vite.config.ts`.
 
