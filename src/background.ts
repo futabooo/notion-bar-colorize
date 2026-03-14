@@ -14,4 +14,14 @@
       }
     );
   });
+
+  // sync storageが更新されたら全Notionタブに色の再適用を指示
+  chrome.storage.onChanged.addListener((_changes, area) => {
+    if (area !== "sync") return;
+    chrome.tabs.query({ url: "https://www.notion.so/*" }, (tabs) => {
+      tabs.forEach((tab) => {
+        if (tab.id) chrome.tabs.sendMessage(tab.id, {}, (_) => {});
+      });
+    });
+  });
 })();

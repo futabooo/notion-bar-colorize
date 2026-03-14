@@ -216,4 +216,16 @@ const saveConditions = () => {
       addCondition(condition);
     });
   });
+
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== "sync" || !changes.notionBarColorizeConditions) return;
+    document.querySelectorAll(".condition").forEach((el) => el.remove());
+    const conditions: Condition[] =
+      (changes.notionBarColorizeConditions.newValue as Condition[]) ?? [];
+    if (conditions.length === 0) {
+      addEmptyCondition();
+    } else {
+      conditions.forEach((condition) => addCondition(condition));
+    }
+  });
 })();
