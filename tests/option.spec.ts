@@ -66,3 +66,79 @@ test.describe("option.html tests", () => {
     await expect(finalRowCount).toBe(initialRowCount);
   });
 });
+
+test.describe("storage sync", () => {
+  test.beforeEach(async ({ page, extensionId }) => {
+    await page.goto(`chrome-extension://${extensionId}/src/option.html`);
+    await page.evaluate(
+      () =>
+        new Promise<void>((resolve) => chrome.storage.sync.clear(() => resolve()))
+    );
+    await page.reload();
+    await page.waitForTimeout(1000);
+  });
+
+  test("option page reflects synced data without reload", async ({ page }) => {
+    // ストレージが空なので空の条件行が1つ表示される
+    await expect(page.locator(".condition")).toHaveCount(1);
+    await expect(page.locator(".workspace-id").first()).toHaveValue("");
+
+    // 別デバイスからのsyncを模倣してストレージを直接更新
+    await page.evaluate(
+      () =>
+        new Promise<void>((resolve) =>
+          chrome.storage.sync.set(
+            {
+              notionBarColorizeConditions: [
+                { workspaceId: "synced-workspace", color: { r: 83, g: 173, b: 78 } },
+              ],
+            },
+            () => resolve()
+          )
+        )
+    );
+
+    // onChangedリスナーがUIを更新するのを待つ
+    await page.waitForTimeout(500);
+
+    await expect(page.locator(".condition")).toHaveCount(1);
+    await expect(page.locator(".workspace-id").first()).toHaveValue("synced-workspace");
+  });
+
+  test("option page shows empty row when synced data is cleared", async ({
+    page,
+  }) => {
+    // まずデータをセット
+    await page.evaluate(
+      () =>
+        new Promise<void>((resolve) =>
+          chrome.storage.sync.set(
+            {
+              notionBarColorizeConditions: [
+                { workspaceId: "workspace-1", color: { r: 83, g: 173, b: 78 } },
+              ],
+            },
+            () => resolve()
+          )
+        )
+    );
+    await page.waitForTimeout(500);
+    await expect(page.locator(".workspace-id").first()).toHaveValue("workspace-1");
+
+    // 別デバイスからのsyncで条件が削除された場合を模倣
+    await page.evaluate(
+      () =>
+        new Promise<void>((resolve) =>
+          chrome.storage.sync.set(
+            { notionBarColorizeConditions: [] },
+            () => resolve()
+          )
+        )
+    );
+    await page.waitForTimeout(500);
+
+    // 空の条件行が1つ表示される
+    await expect(page.locator(".condition")).toHaveCount(1);
+    await expect(page.locator(".workspace-id").first()).toHaveValue("");
+  });
+});
