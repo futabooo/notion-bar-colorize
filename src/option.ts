@@ -221,7 +221,7 @@ const saveConditions = () => {
     if (area !== "sync" || !changes.notionBarColorizeConditions) return;
     document.querySelectorAll(".condition").forEach((el) => el.remove());
     const conditions: Condition[] =
-      changes.notionBarColorizeConditions.newValue ?? [];
+      (changes.notionBarColorizeConditions.newValue as Condition[]) ?? [];
     if (conditions.length === 0) {
       addEmptyCondition();
     } else {
