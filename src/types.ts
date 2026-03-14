@@ -1,6 +1,7 @@
 export interface Condition {
   workspaceId: string;
   color: Color;
+  textColor?: Color;
 }
 
 export interface Color {
