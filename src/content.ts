@@ -32,8 +32,23 @@ const parseRgb = (str: string): Color | null => {
   return m ? { r: parseInt(m[1]), g: parseInt(m[2]), b: parseInt(m[3]) } : null;
 };
 
+// 以前の調整をクリアする
+const clearAdjustedStyles = (container: HTMLElement) => {
+  container.querySelectorAll<HTMLElement>("[data-original-color]").forEach((el) => {
+    el.style.removeProperty("color");
+    el.removeAttribute("data-original-color");
+  });
+  container.querySelectorAll<SVGElement>("[data-original-fill]").forEach((svg) => {
+    svg.style.removeProperty("fill");
+    svg.removeAttribute("data-original-fill");
+  });
+};
+
 // コンテナのデフォルト色を設定し、各子要素の元の色を背景に対して個別に調整する
 const applyAdjustedTextColors = (container: HTMLElement, bgColor: Color, overrideColor?: Color) => {
+  // 前回の調整をクリアしてからスタイルを適用
+  clearAdjustedStyles(container);
+
   if (overrideColor) {
     // 手動指定がある場合は一律適用
     container.style.setProperty(
@@ -53,7 +68,12 @@ const applyAdjustedTextColors = (container: HTMLElement, bgColor: Color, overrid
   container.querySelectorAll<HTMLElement>("*").forEach((el) => {
     const computedColor = window.getComputedStyle(el).color;
     if (computedColor !== inheritedColorStr) {
-      const original = parseRgb(computedColor);
+      // 元の色を data 属性に保存（再実行時のドリフト防止）
+      if (!el.hasAttribute("data-original-color")) {
+        el.setAttribute("data-original-color", computedColor);
+      }
+      const originalStr = el.getAttribute("data-original-color")!;
+      const original = parseRgb(originalStr);
       if (original) {
         const adjusted = adjustColorForReadability(original, bgColor);
         el.style.setProperty(
@@ -68,7 +88,11 @@ const applyAdjustedTextColors = (container: HTMLElement, bgColor: Color, overrid
   // graphics-symbol アイコンの fill を個別に調整
   container.querySelectorAll<SVGElement>("[role='graphics-symbol']").forEach((svg) => {
     const computedFill = window.getComputedStyle(svg).fill;
-    const original = parseRgb(computedFill);
+    if (!svg.hasAttribute("data-original-fill")) {
+      svg.setAttribute("data-original-fill", computedFill);
+    }
+    const originalStr = svg.getAttribute("data-original-fill")!;
+    const original = parseRgb(originalStr);
     if (!original) return;
     if (getContrastRatio(original, bgColor) >= 3.0) return; // アイコンは 3:1 基準
 
@@ -119,12 +143,12 @@ const changeSidebarColor = async () => {
       // 設定がない場合はデフォルトの色に戻す
       const isDark = document.body.classList.contains("dark");
       const theme = isDark ? DARK_THEME : LIGHT_THEME;
-      const rgbStr = `rgb(${theme.topbar.r}, ${theme.topbar.g}, ${theme.topbar.b})`;
+      const rgbStr = `rgb(${theme.sidebar.r}, ${theme.sidebar.g}, ${theme.sidebar.b})`;
       bar.style.backgroundColor = rgbStr;
       // sidebarを常に非表示としている場合の対応
       let firstChild = bar.children[0] as HTMLDivElement;
       firstChild.style.backgroundColor = rgbStr;
-      applyAdjustedTextColors(bar, theme.topbar, theme.text);
+      applyAdjustedTextColors(bar, theme.sidebar, theme.text);
     }
   }
 };
