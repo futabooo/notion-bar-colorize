@@ -116,6 +116,21 @@ const setChangeColorPickerVisibilityListeners = (
   const colorPicker = new RgbStringColorPicker();
   colorPicker.style.position = "absolute";
 
+  colorPicker.addEventListener("color-changed", (event) => {
+    const rgbValue = event.detail.value;
+    colorInput.style.backgroundColor = rgbValue;
+    colorInput.value = rgbValue;
+    const parts = rgbValue.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+    if (parts) {
+      const textColor = getAccessibleTextColor({
+        r: parseInt(parts[1]),
+        g: parseInt(parts[2]),
+        b: parseInt(parts[3]),
+      });
+      colorInput.style.color = `rgb(${textColor.r}, ${textColor.g}, ${textColor.b})`;
+    }
+  });
+
   // colorInputにフォーカスが当たったときにcolorPickerを表示
   colorInput.addEventListener("focus", () => {
     const rect = colorInput.getBoundingClientRect();
@@ -123,21 +138,6 @@ const setChangeColorPickerVisibilityListeners = (
     colorPicker.style.left = `${rect.left}px`;
     colorPicker.style.removeProperty("display");
     document.body.appendChild(colorPicker);
-
-    colorPicker.addEventListener("color-changed", (event) => {
-      const rgbValue = event.detail.value;
-      colorInput.style.backgroundColor = rgbValue;
-      colorInput.value = rgbValue;
-      const parts = rgbValue.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
-      if (parts) {
-        const textColor = getAccessibleTextColor({
-          r: parseInt(parts[1]),
-          g: parseInt(parts[2]),
-          b: parseInt(parts[3]),
-        });
-        colorInput.style.color = `rgb(${textColor.r}, ${textColor.g}, ${textColor.b})`;
-      }
-    });
   });
 
   // colorInputとcolorPickerの間でフォーカスが移動するときに
@@ -173,13 +173,16 @@ const saveConditions = () => {
     const colorParts = color?.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
 
     if (id && colorParts) {
+      const bgColor = {
+        r: parseInt(colorParts[1]),
+        g: parseInt(colorParts[2]),
+        b: parseInt(colorParts[3]),
+      };
+      const textColor = getAccessibleTextColor(bgColor);
       conditions.push({
         workspaceId: id,
-        color: {
-          r: parseInt(colorParts[1]),
-          g: parseInt(colorParts[2]),
-          b: parseInt(colorParts[3]),
-        },
+        color: bgColor,
+        textColor,
       });
     }
   });
