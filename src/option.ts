@@ -1,5 +1,6 @@
 import { RgbStringColorPicker } from "vanilla-colorful/rgb-string-color-picker.js";
 import { Condition } from "./types";
+import { getAccessibleTextColor } from "./color-utils";
 
 const addCondition = (condition: Condition | null) => {
   const table = document.getElementById("conditions");
@@ -34,6 +35,8 @@ const addCondition = (condition: Condition | null) => {
       ")";
     (colorInput as HTMLInputElement).style.backgroundColor = colorRgb;
     (colorInput as HTMLInputElement).value = colorRgb;
+    const textColor = condition.textColor ?? getAccessibleTextColor(condition.color);
+    (colorInput as HTMLInputElement).style.color = `rgb(${textColor.r}, ${textColor.g}, ${textColor.b})`;
   }
 
   table?.appendChild(conditionRow);
@@ -122,8 +125,18 @@ const setChangeColorPickerVisibilityListeners = (
     document.body.appendChild(colorPicker);
 
     colorPicker.addEventListener("color-changed", (event) => {
-      colorInput.style.backgroundColor = event.detail.value;
-      colorInput.value = event.detail.value;
+      const rgbValue = event.detail.value;
+      colorInput.style.backgroundColor = rgbValue;
+      colorInput.value = rgbValue;
+      const parts = rgbValue.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+      if (parts) {
+        const textColor = getAccessibleTextColor({
+          r: parseInt(parts[1]),
+          g: parseInt(parts[2]),
+          b: parseInt(parts[3]),
+        });
+        colorInput.style.color = `rgb(${textColor.r}, ${textColor.g}, ${textColor.b})`;
+      }
     });
   });
 
