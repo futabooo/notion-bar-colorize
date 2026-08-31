@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.4](https://github.com/futabooo/notion-bar-colorize/compare/1.1.3...1.1.4) - 2026-08-31
+- Update dependency vite to v7.3.6 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/134
+- Update dependency vitest to v4.1.11 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/135
+- Update actions/checkout action to v6.1.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/136
+- Update actions/setup-node action to v6.5.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/137
+
 ## [1.1.3](https://github.com/futabooo/notion-bar-colorize/compare/1.1.2...1.1.3) - 2026-03-14
 - sidebarが常に非表示の時に色が適応されるようにする by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/105
 - Update dependency daisyui to v5.1.10 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/97
