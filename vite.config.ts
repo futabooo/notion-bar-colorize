@@ -26,7 +26,7 @@ const manifest = defineManifest({
   },
   content_scripts: [
     {
-      matches: ["https://www.notion.so/*"],
+      matches: ["https://www.notion.so/*", "https://app.notion.com/*"],
       js: ["src/content.ts"],
     },
   ],

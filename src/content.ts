@@ -2,10 +2,20 @@ import { DARK_THEME, LIGHT_THEME } from "./consts";
 import { adjustColorForReadability, getAccessibleTextColor, getContrastRatio } from "./color-utils";
 import { Color, Condition } from "./types";
 
+// URL の pathname からワークスペース ID を取り出す
+// 旧: https://www.notion.so/<workspace>/<page>
+// 新: https://app.notion.com/p/<workspace>/<page>
+const workspaceIDFromPathname = (pathname: string) => {
+  const pathParts = pathname.split("/").filter((p) => p !== "");
+  if (pathParts[0] === "p") {
+    return pathParts[1] ?? "";
+  }
+  return pathParts[0] ?? "";
+};
+
 const currentWorkspaceID = () => {
   const url = new URL(window.location.href);
-  const pathParts = url.pathname.split("/");
-  return pathParts[1];
+  return workspaceIDFromPathname(url.pathname);
 };
 
 const findCondition = (workspaceId: string): Promise<Condition | null> => {
@@ -162,8 +172,7 @@ const changePeekTopbarColor = async () => {
       return;
     }
     const url = new URL(anchor.href);
-    const pathParts = url.pathname.split("/");
-    const workspace = pathParts[1];
+    const workspace = workspaceIDFromPathname(url.pathname);
     const condition = await findCondition(workspace);
     if (condition) {
       const { color, textColor } = condition;
