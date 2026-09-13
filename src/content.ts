@@ -1,5 +1,10 @@
 import { DARK_THEME, LIGHT_THEME } from "./consts";
-import { adjustColorForReadability, getAccessibleTextColor, getContrastRatio } from "./color-utils";
+import {
+  adjustColorForReadability,
+  getAccessibleTextColor,
+  getContrastRatio,
+  parseCssColor,
+} from "./color-utils";
 import { Color, Condition } from "./types";
 
 // URL の pathname からワークスペース ID を取り出す
@@ -35,11 +40,6 @@ const findCondition = (workspaceId: string): Promise<Condition | null> => {
       resolve(null);
     });
   });
-};
-
-const parseRgb = (str: string): Color | null => {
-  const m = str.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
-  return m ? { r: parseInt(m[1]), g: parseInt(m[2]), b: parseInt(m[3]) } : null;
 };
 
 // 以前の調整をクリアする
@@ -83,7 +83,7 @@ const applyAdjustedTextColors = (container: HTMLElement, bgColor: Color, overrid
         el.setAttribute("data-original-color", computedColor);
       }
       const originalStr = el.getAttribute("data-original-color")!;
-      const original = parseRgb(originalStr);
+      const original = parseCssColor(originalStr, bgColor);
       if (original) {
         const adjusted = adjustColorForReadability(original, bgColor);
         el.style.setProperty(
@@ -102,7 +102,7 @@ const applyAdjustedTextColors = (container: HTMLElement, bgColor: Color, overrid
       svg.setAttribute("data-original-fill", computedFill);
     }
     const originalStr = svg.getAttribute("data-original-fill")!;
-    const original = parseRgb(originalStr);
+    const original = parseCssColor(originalStr, bgColor);
     if (!original) return;
     if (getContrastRatio(original, bgColor) >= 3.0) return; // アイコンは 3:1 基準
 
@@ -200,27 +200,23 @@ changeSidebarColor();
 changePeekTopbarColor();
 
 // Notion は React SPA のため初回実行後に動的レンダリングされる要素に対応する
-// サイドバー内に新要素が追加されたとき（notion-outliner-* など）に色調整を再適用する
+// サイドバー / トップバー内に要素が追加されたとき色調整を再適用する
 let debounceTimer: number | null = null;
 const observer = new MutationObserver((mutations) => {
-  const hasOutlinerChange = mutations.some((m) =>
-    Array.from(m.addedNodes).some(
-      (n) =>
-        n instanceof HTMLElement &&
-        (n.classList.contains("notion-outliner-recents-header") ||
-          n.querySelector?.(".notion-outliner-recents-header") !== null)
-    )
+  const hasAddedElement = mutations.some((m) =>
+    Array.from(m.addedNodes).some((n) => n instanceof HTMLElement)
   );
-  if (!hasOutlinerChange) return;
+  if (!hasAddedElement) return;
 
   if (debounceTimer !== null) clearTimeout(debounceTimer);
   debounceTimer = window.setTimeout(() => {
+    changeTopbarColor();
     changeSidebarColor();
     debounceTimer = null;
-  }, 100);
+  }, 200);
 });
 
-const sidebarRoot = document.querySelector(".notion-sidebar");
-if (sidebarRoot) {
-  observer.observe(sidebarRoot, { childList: true, subtree: true });
+for (const selector of [".notion-sidebar", ".notion-topbar"]) {
+  const root = document.querySelector(selector);
+  if (root) observer.observe(root, { childList: true, subtree: true });
 }

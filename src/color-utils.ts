@@ -8,6 +8,25 @@ export function toRelativeLuminance({ r, g, b }: Color): number {
   return 0.2126 * linearize(r) + 0.7152 * linearize(g) + 0.0722 * linearize(b);
 }
 
+// getComputedStyle が返す "rgb(r, g, b)" / "rgba(r, g, b, a)" をパースする
+// 半透明色は background に合成した実際の見た目の色を返す。透明(alpha=0)や未対応形式は null
+export function parseCssColor(str: string, background: Color): Color | null {
+  const m = str.match(
+    /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([\d.]+)\s*)?\)/
+  );
+  if (!m) return null;
+  const fg: Color = { r: parseInt(m[1]), g: parseInt(m[2]), b: parseInt(m[3]) };
+  const alpha = m[4] === undefined ? 1 : parseFloat(m[4]);
+  if (alpha <= 0) return null;
+  if (alpha >= 1) return fg;
+  const blend = (f: number, b: number) => Math.round(f * alpha + b * (1 - alpha));
+  return {
+    r: blend(fg.r, background.r),
+    g: blend(fg.g, background.g),
+    b: blend(fg.b, background.b),
+  };
+}
+
 export function getContrastRatio(c1: Color, c2: Color): number {
   const l1 = toRelativeLuminance(c1);
   const l2 = toRelativeLuminance(c2);
