@@ -40,3 +40,4 @@ jobs:
         with:
           tag: ${{ needs.tagpr.outputs.tag }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          sentry_dsn: ${{ secrets.VITE_SENTRY_DSN }}
