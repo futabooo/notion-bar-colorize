@@ -199,24 +199,27 @@ changeTopbarColor();
 changeSidebarColor();
 changePeekTopbarColor();
 
-// Notion は React SPA のため初回実行後に動的レンダリングされる要素に対応する
-// サイドバー / トップバー内に要素が追加されたとき色調整を再適用する
+// Notion は React SPA のため、content script 実行時点では .notion-sidebar 等が
+// まだ存在しないことがある。document 全体を監視し、バー配下に要素が追加されたら
+// 色調整を再適用する（バー自体が後から生成されるケースも拾える）
+const BAR_SELECTOR = ".notion-sidebar, .notion-topbar, .peek-top-hover-area";
 let debounceTimer: number | null = null;
 const observer = new MutationObserver((mutations) => {
-  const hasAddedElement = mutations.some((m) =>
-    Array.from(m.addedNodes).some((n) => n instanceof HTMLElement)
+  const affectsBar = mutations.some((m) =>
+    Array.from(m.addedNodes).some(
+      (n) =>
+        n instanceof HTMLElement &&
+        (n.closest(BAR_SELECTOR) !== null || n.querySelector(BAR_SELECTOR) !== null)
+    )
   );
-  if (!hasAddedElement) return;
+  if (!affectsBar) return;
 
   if (debounceTimer !== null) clearTimeout(debounceTimer);
   debounceTimer = window.setTimeout(() => {
     changeTopbarColor();
     changeSidebarColor();
+    changePeekTopbarColor();
     debounceTimer = null;
   }, 200);
 });
-
-for (const selector of [".notion-sidebar", ".notion-topbar"]) {
-  const root = document.querySelector(selector);
-  if (root) observer.observe(root, { childList: true, subtree: true });
-}
+observer.observe(document.documentElement, { childList: true, subtree: true });
