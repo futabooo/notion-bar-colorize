@@ -6,6 +6,7 @@ import {
   parseCssColor,
 } from "./color-utils";
 import { Color, Condition } from "./types";
+import { reportError, withErrorReport } from "./error-reporting";
 
 // URL の pathname からワークスペース ID を取り出す
 // 旧: https://www.notion.so/<workspace>/<page>
@@ -192,15 +193,16 @@ const changePeekTopbarColor = async () => {
 };
 
 const applyAll = async () => {
-  await changeTopbarColor();
-  await changeSidebarColor();
-  await changePeekTopbarColor();
+  await withErrorReport("content", "changeTopbarColor", changeTopbarColor);
+  await withErrorReport("content", "changeSidebarColor", changeSidebarColor);
+  await withErrorReport("content", "changePeekTopbarColor", changePeekTopbarColor);
   // 自分の書き込みで発生した mutation record を捨てて無限ループを防ぐ
   observer.takeRecords();
 };
 
-// メッセージを受け取ったときに色を変更
-chrome.runtime.onMessage.addListener(() => {
+// メッセージを受け取ったときに色を変更（エラー報告メッセージは background 宛なので無視）
+chrome.runtime.onMessage.addListener((message) => {
+  if (message && typeof message === "object" && "type" in message) return;
   applyAll();
 });
 
@@ -218,11 +220,17 @@ const isRelevantNode = (n: Node): boolean =>
 
 let debounceTimer: number | null = null;
 const observer = new MutationObserver((mutations) => {
-  const relevant = mutations.some((m) =>
-    m.type === "attributes"
-      ? isRelevantNode(m.target)
-      : Array.from(m.addedNodes).some(isRelevantNode)
-  );
+  let relevant = false;
+  try {
+    relevant = mutations.some((m) =>
+      m.type === "attributes"
+        ? isRelevantNode(m.target)
+        : Array.from(m.addedNodes).some(isRelevantNode)
+    );
+  } catch (e) {
+    reportError("content", e, "mutationObserver");
+    return;
+  }
   if (!relevant) return;
 
   if (debounceTimer !== null) clearTimeout(debounceTimer);

@@ -18,13 +18,19 @@ The Application uses the `storage` permission to save color settings for each wo
 
 The Application uses the `webNavigation` permission to detect when you change workspaces in Notion. This allows the Application to apply the saved color settings for each workspace. This information is not collected by us or shared with any third parties.
 
+### Error reporting
+
+To keep the Application working when Notion changes its interface, the Application may send reports about errors that occur **inside the Application's own code** to [Sentry](https://sentry.io/), an error monitoring service. A report contains only technical information: the error type and message, a stack trace of the Application's code, the Application version, and the name of the internal operation that failed.
+
+Error reports do **not** contain your Notion page URLs, page contents, workspace identifiers, color settings, or any personal information. Errors that occur in Notion itself are not reported. Sentry's handling of the data it receives is described in [Sentry's privacy policy](https://sentry.io/privacy/).
+
 ## Does the Application collect precise real time location information of the device?
 
 This Application does not collect precise information about the location of your device.
 
 ## Do third parties see and/or have access to information obtained by the Application?
 
-No. This Application does not share any information with third parties.
+Only the technical error reports described above are sent to Sentry. No other information is shared with any third parties.
 
 ## Security
 

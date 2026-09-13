@@ -1,6 +1,11 @@
 import { RgbStringColorPicker } from "vanilla-colorful/rgb-string-color-picker.js";
 import { Condition } from "./types";
 import { getAccessibleTextColor } from "./color-utils";
+import { reportError } from "./error-reporting";
+
+// 拡張自身のページなので、グローバルハンドラで拾っても Notion 由来のノイズは混ざらない
+window.addEventListener("error", (e) => reportError("option", e.error ?? e.message, "window.error"));
+window.addEventListener("unhandledrejection", (e) => reportError("option", e.reason, "unhandledrejection"));
 
 const addCondition = (condition: Condition | null) => {
   const table = document.getElementById("conditions");
