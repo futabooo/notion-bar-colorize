@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.5](https://github.com/futabooo/notion-bar-colorize/compare/1.1.4...1.1.5) - 2026-09-13
+
+- Add optional Sentry error reporting by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/156
+- Pass VITE_SENTRY_DSN into the release build by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/158
+
 ## [1.1.4](https://github.com/futabooo/notion-bar-colorize/compare/1.1.3...1.1.4) - 2026-09-13
 
 - Update dependency vite to v7.3.6 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/134
