@@ -1,11 +1,26 @@
 import { DARK_THEME, LIGHT_THEME } from "./consts";
-import { adjustColorForReadability, getAccessibleTextColor, getContrastRatio } from "./color-utils";
+import {
+  adjustColorForReadability,
+  getAccessibleTextColor,
+  getContrastRatio,
+  parseCssColor,
+} from "./color-utils";
 import { Color, Condition } from "./types";
+
+// URL の pathname からワークスペース ID を取り出す
+// 旧: https://www.notion.so/<workspace>/<page>
+// 新: https://app.notion.com/p/<workspace>/<page>
+const workspaceIDFromPathname = (pathname: string) => {
+  const pathParts = pathname.split("/").filter((p) => p !== "");
+  if (pathParts[0] === "p") {
+    return pathParts[1] ?? "";
+  }
+  return pathParts[0] ?? "";
+};
 
 const currentWorkspaceID = () => {
   const url = new URL(window.location.href);
-  const pathParts = url.pathname.split("/");
-  return pathParts[1];
+  return workspaceIDFromPathname(url.pathname);
 };
 
 const findCondition = (workspaceId: string): Promise<Condition | null> => {
@@ -27,11 +42,6 @@ const findCondition = (workspaceId: string): Promise<Condition | null> => {
   });
 };
 
-const parseRgb = (str: string): Color | null => {
-  const m = str.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
-  return m ? { r: parseInt(m[1]), g: parseInt(m[2]), b: parseInt(m[3]) } : null;
-};
-
 // 以前の調整をクリアする
 const clearAdjustedStyles = (container: HTMLElement) => {
   container.querySelectorAll<HTMLElement>("[data-original-color]").forEach((el) => {
@@ -45,23 +55,26 @@ const clearAdjustedStyles = (container: HTMLElement) => {
 };
 
 // コンテナのデフォルト色を設定し、各子要素の元の色を背景に対して個別に調整する
-const applyAdjustedTextColors = (container: HTMLElement, bgColor: Color, overrideColor?: Color) => {
+// defaultTextColor が渡された場合はコンテナのデフォルト色として使う
+// （オプション画面は常に textColor を保存するため、これを「一律適用」と扱うと
+//   独自の色を持つ子要素が一切調整されなくなる）
+const applyAdjustedTextColors = (
+  container: HTMLElement,
+  bgColor: Color,
+  defaultTextColor?: Color
+) => {
   // 前回の調整をクリアしてからスタイルを適用
   clearAdjustedStyles(container);
 
-  if (overrideColor) {
-    // 手動指定がある場合は一律適用
-    container.style.setProperty(
-      "color",
-      `rgb(${overrideColor.r}, ${overrideColor.g}, ${overrideColor.b})`,
-      "important"
-    );
-    return;
-  }
-
-  // デフォルト色をコンテナに設定（!important なし → 子の CSS ルールが上書き可能）
-  const defaultColor = getAccessibleTextColor(bgColor);
-  container.style.color = `rgb(${defaultColor.r}, ${defaultColor.g}, ${defaultColor.b})`;
+  // デフォルト色をコンテナに設定
+  // !important はコンテナ自身に対する Notion のルールに勝つためで、
+  // 独自の color ルールを持つ子要素には影響しない（子は下で個別に調整する）
+  const defaultColor = defaultTextColor ?? getAccessibleTextColor(bgColor);
+  container.style.setProperty(
+    "color",
+    `rgb(${defaultColor.r}, ${defaultColor.g}, ${defaultColor.b})`,
+    "important"
+  );
   const inheritedColorStr = window.getComputedStyle(container).color;
 
   // 各子要素を走査し、独自の color を持つ要素を調整
@@ -73,7 +86,7 @@ const applyAdjustedTextColors = (container: HTMLElement, bgColor: Color, overrid
         el.setAttribute("data-original-color", computedColor);
       }
       const originalStr = el.getAttribute("data-original-color")!;
-      const original = parseRgb(originalStr);
+      const original = parseCssColor(originalStr, bgColor);
       if (original) {
         const adjusted = adjustColorForReadability(original, bgColor);
         el.style.setProperty(
@@ -92,7 +105,7 @@ const applyAdjustedTextColors = (container: HTMLElement, bgColor: Color, overrid
       svg.setAttribute("data-original-fill", computedFill);
     }
     const originalStr = svg.getAttribute("data-original-fill")!;
-    const original = parseRgb(originalStr);
+    const original = parseCssColor(originalStr, bgColor);
     if (!original) return;
     if (getContrastRatio(original, bgColor) >= 3.0) return; // アイコンは 3:1 基準
 
@@ -133,22 +146,22 @@ const changeSidebarColor = async () => {
       const { color, textColor } = condition;
       const rgbStr = `rgb(${color.r}, ${color.g}, ${color.b})`;
       bar.style.backgroundColor = rgbStr;
-
-      // sidebarを常に非表示としている場合の対応
-      let child = bar.children[1] as HTMLDivElement;
-      child.style.backgroundColor = rgbStr;
-
       applyAdjustedTextColors(bar, color, textColor);
+
+      // sidebarを常に非表示としている場合の対応（旧UIでは children[1] が本体）
+      // 新UIでは子要素の構成が異なるため存在チェックを行う
+      const child = bar.children[1] as HTMLElement | undefined;
+      if (child) child.style.backgroundColor = rgbStr;
     } else {
       // 設定がない場合はデフォルトの色に戻す
       const isDark = document.body.classList.contains("dark");
       const theme = isDark ? DARK_THEME : LIGHT_THEME;
       const rgbStr = `rgb(${theme.sidebar.r}, ${theme.sidebar.g}, ${theme.sidebar.b})`;
       bar.style.backgroundColor = rgbStr;
-      // sidebarを常に非表示としている場合の対応
-      let firstChild = bar.children[0] as HTMLDivElement;
-      firstChild.style.backgroundColor = rgbStr;
       applyAdjustedTextColors(bar, theme.sidebar, theme.text);
+      // sidebarを常に非表示としている場合の対応
+      const firstChild = bar.children[0] as HTMLElement | undefined;
+      if (firstChild) firstChild.style.backgroundColor = rgbStr;
     }
   }
 };
@@ -162,8 +175,7 @@ const changePeekTopbarColor = async () => {
       return;
     }
     const url = new URL(anchor.href);
-    const pathParts = url.pathname.split("/");
-    const workspace = pathParts[1];
+    const workspace = workspaceIDFromPathname(url.pathname);
     const condition = await findCondition(workspace);
     if (condition) {
       const { color, textColor } = condition;
@@ -179,39 +191,55 @@ const changePeekTopbarColor = async () => {
   }
 };
 
+const applyAll = async () => {
+  await changeTopbarColor();
+  await changeSidebarColor();
+  await changePeekTopbarColor();
+  // 自分の書き込みで発生した mutation record を捨てて無限ループを防ぐ
+  observer.takeRecords();
+};
+
 // メッセージを受け取ったときに色を変更
 chrome.runtime.onMessage.addListener(() => {
-  changeTopbarColor();
-  changeSidebarColor();
-  changePeekTopbarColor();
+  applyAll();
 });
 
-changeTopbarColor();
-changeSidebarColor();
-changePeekTopbarColor();
+// Notion は React SPA のため、content script 実行時点では .notion-sidebar 等が
+// まだ存在しないことがある。また、ハイドレーション後にテーマ用の class / CSS 変数が
+// 差し替わり文字色が変わる（要素追加を伴わない）。document 全体の要素追加と
+// class / style 変更を監視し、バーに関係するものがあれば色調整を再適用する
+const BAR_SELECTOR = ".notion-sidebar, .notion-topbar, .peek-top-hover-area";
+const isRelevantNode = (n: Node): boolean =>
+  n instanceof HTMLElement &&
+  (n === document.documentElement ||
+    n === document.body ||
+    n.closest(BAR_SELECTOR) !== null ||
+    n.querySelector(BAR_SELECTOR) !== null);
 
-// Notion は React SPA のため初回実行後に動的レンダリングされる要素に対応する
-// サイドバー内に新要素が追加されたとき（notion-outliner-* など）に色調整を再適用する
 let debounceTimer: number | null = null;
 const observer = new MutationObserver((mutations) => {
-  const hasOutlinerChange = mutations.some((m) =>
-    Array.from(m.addedNodes).some(
-      (n) =>
-        n instanceof HTMLElement &&
-        (n.classList.contains("notion-outliner-recents-header") ||
-          n.querySelector?.(".notion-outliner-recents-header") !== null)
-    )
+  const relevant = mutations.some((m) =>
+    m.type === "attributes"
+      ? isRelevantNode(m.target)
+      : Array.from(m.addedNodes).some(isRelevantNode)
   );
-  if (!hasOutlinerChange) return;
+  if (!relevant) return;
 
   if (debounceTimer !== null) clearTimeout(debounceTimer);
   debounceTimer = window.setTimeout(() => {
-    changeSidebarColor();
     debounceTimer = null;
-  }, 100);
+    applyAll();
+  }, 200);
+});
+observer.observe(document.documentElement, {
+  childList: true,
+  subtree: true,
+  attributes: true,
+  attributeFilter: ["class", "style"],
 });
 
-const sidebarRoot = document.querySelector(".notion-sidebar");
-if (sidebarRoot) {
-  observer.observe(sidebarRoot, { childList: true, subtree: true });
+applyAll();
+// 保険: 初期描画後に数回再適用する
+for (const delay of [1000, 3000, 6000]) {
+  window.setTimeout(applyAll, delay);
 }

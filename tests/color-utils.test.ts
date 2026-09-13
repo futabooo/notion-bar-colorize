@@ -4,6 +4,7 @@ import {
   getContrastRatio,
   getAccessibleTextColor,
   adjustColorForReadability,
+  parseCssColor,
 } from "../src/color-utils";
 import { Color } from "../src/types";
 
@@ -70,5 +71,26 @@ describe("adjustColorForReadability", () => {
     // Adjusted red should still be reddish (r > g and r > b)
     expect(adjusted.r).toBeGreaterThan(adjusted.g);
     expect(adjusted.r).toBeGreaterThan(adjusted.b);
+  });
+});
+
+describe("parseCssColor", () => {
+  const bg: Color = { r: 200, g: 30, b: 30 };
+
+  test("parses opaque rgb()", () => {
+    expect(parseCssColor("rgb(55, 53, 47)", bg)).toEqual({ r: 55, g: 53, b: 47 });
+  });
+
+  test("composites rgba() over the background", () => {
+    // 0.5 * 0 + 0.5 * 200 = 100
+    expect(parseCssColor("rgba(0, 0, 0, 0.5)", bg)).toEqual({ r: 100, g: 15, b: 15 });
+  });
+
+  test("returns null for fully transparent color", () => {
+    expect(parseCssColor("rgba(0, 0, 0, 0)", bg)).toBeNull();
+  });
+
+  test("returns null for unsupported formats", () => {
+    expect(parseCssColor("oklch(0.5 0.1 20)", bg)).toBeNull();
   });
 });
