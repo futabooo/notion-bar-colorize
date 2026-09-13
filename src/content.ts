@@ -194,38 +194,55 @@ const changePeekTopbarColor = async () => {
   }
 };
 
+const applyAll = async () => {
+  await changeTopbarColor();
+  await changeSidebarColor();
+  await changePeekTopbarColor();
+  // 自分の書き込みで発生した mutation record を捨てて無限ループを防ぐ
+  observer.takeRecords();
+};
+
 // メッセージを受け取ったときに色を変更
 chrome.runtime.onMessage.addListener(() => {
-  changeTopbarColor();
-  changeSidebarColor();
-  changePeekTopbarColor();
+  applyAll();
 });
 
-changeTopbarColor();
-changeSidebarColor();
-changePeekTopbarColor();
-
 // Notion は React SPA のため、content script 実行時点では .notion-sidebar 等が
-// まだ存在しないことがある。document 全体を監視し、バー配下に要素が追加されたら
-// 色調整を再適用する（バー自体が後から生成されるケースも拾える）
+// まだ存在しないことがある。また、ハイドレーション後にテーマ用の class / CSS 変数が
+// 差し替わり文字色が変わる（要素追加を伴わない）。document 全体の要素追加と
+// class / style 変更を監視し、バーに関係するものがあれば色調整を再適用する
 const BAR_SELECTOR = ".notion-sidebar, .notion-topbar, .peek-top-hover-area";
+const isRelevantNode = (n: Node): boolean =>
+  n instanceof HTMLElement &&
+  (n === document.documentElement ||
+    n === document.body ||
+    n.closest(BAR_SELECTOR) !== null ||
+    n.querySelector(BAR_SELECTOR) !== null);
+
 let debounceTimer: number | null = null;
 const observer = new MutationObserver((mutations) => {
-  const affectsBar = mutations.some((m) =>
-    Array.from(m.addedNodes).some(
-      (n) =>
-        n instanceof HTMLElement &&
-        (n.closest(BAR_SELECTOR) !== null || n.querySelector(BAR_SELECTOR) !== null)
-    )
+  const relevant = mutations.some((m) =>
+    m.type === "attributes"
+      ? isRelevantNode(m.target)
+      : Array.from(m.addedNodes).some(isRelevantNode)
   );
-  if (!affectsBar) return;
+  if (!relevant) return;
 
   if (debounceTimer !== null) clearTimeout(debounceTimer);
   debounceTimer = window.setTimeout(() => {
-    changeTopbarColor();
-    changeSidebarColor();
-    changePeekTopbarColor();
     debounceTimer = null;
+    applyAll();
   }, 200);
 });
-observer.observe(document.documentElement, { childList: true, subtree: true });
+observer.observe(document.documentElement, {
+  childList: true,
+  subtree: true,
+  attributes: true,
+  attributeFilter: ["class", "style"],
+});
+
+applyAll();
+// 保険: 初期描画後に数回再適用する
+for (const delay of [1000, 3000, 6000]) {
+  window.setTimeout(applyAll, delay);
+}
