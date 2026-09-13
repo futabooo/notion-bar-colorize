@@ -28,7 +28,8 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Release
-        uses: ./.github/actions/release
+        uses: ./.github/actions/create-github-release
         with:
           tag: ${{ github.ref_name }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          sentry_dsn: ${{ secrets.VITE_SENTRY_DSN }}

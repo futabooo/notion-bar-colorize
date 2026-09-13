@@ -8,6 +8,10 @@ inputs:
   tag:
     description: "The tag name of the release"
     required: true
+  sentry_dsn:
+    description: "Sentry DSN baked into the build (VITE_SENTRY_DSN). Empty disables error reporting."
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -26,6 +30,8 @@ runs:
 
     - name: Build project
       shell: bash
+      env:
+        VITE_SENTRY_DSN: ${{ inputs.sentry_dsn }}
       run: npm run build
 
     - name: Zip artifacts
