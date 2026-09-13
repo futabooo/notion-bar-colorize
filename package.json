@@ -21,6 +21,7 @@
     "vitest": "^4.1.0"
   },
   "dependencies": {
+    "@sentry/browser": "^10.74.0",
     "@tailwindcss/vite": "^4.1.4",
     "tailwindcss": "^4.1.4",
     "vanilla-colorful": "^0.7.2"

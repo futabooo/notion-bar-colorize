@@ -26,3 +26,6 @@ dist-ssr
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# local env (VITE_SENTRY_DSN etc.)
+.env

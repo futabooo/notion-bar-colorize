@@ -34,6 +34,17 @@ or
 2. Unzip the file
 3. Load the `dist` folder into Chrome in `chrome://extensions/`.
 
+# Error reporting (optional)
+
+The extension can send its own runtime errors to [Sentry](https://sentry.io/). Reporting is **disabled by default**: it is compiled in only when `VITE_SENTRY_DSN` is set at build time.
+
+```bash
+cp .env.example .env   # then set VITE_SENTRY_DSN
+npm run build
+```
+
+Only errors thrown by the extension's own code are reported (error name, message, stack trace, and which internal operation failed). Errors from Notion's page, page URLs, page contents, and workspace IDs are never sent. Content scripts and the options page forward errors to the background service worker, which is the only component that talks to Sentry.
+
 # License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
