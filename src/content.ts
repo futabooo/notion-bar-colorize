@@ -69,9 +69,15 @@ const applyAdjustedTextColors = (container: HTMLElement, bgColor: Color, overrid
     return;
   }
 
-  // デフォルト色をコンテナに設定（!important なし → 子の CSS ルールが上書き可能）
+  // デフォルト色をコンテナに設定
+  // !important はコンテナ自身に対する Notion のルールに勝つためで、
+  // 独自の color ルールを持つ子要素には影響しない（子は下で個別に調整する）
   const defaultColor = getAccessibleTextColor(bgColor);
-  container.style.color = `rgb(${defaultColor.r}, ${defaultColor.g}, ${defaultColor.b})`;
+  container.style.setProperty(
+    "color",
+    `rgb(${defaultColor.r}, ${defaultColor.g}, ${defaultColor.b})`,
+    "important"
+  );
   const inheritedColorStr = window.getComputedStyle(container).color;
 
   // 各子要素を走査し、独自の color を持つ要素を調整
