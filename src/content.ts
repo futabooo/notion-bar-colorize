@@ -55,24 +55,21 @@ const clearAdjustedStyles = (container: HTMLElement) => {
 };
 
 // コンテナのデフォルト色を設定し、各子要素の元の色を背景に対して個別に調整する
-const applyAdjustedTextColors = (container: HTMLElement, bgColor: Color, overrideColor?: Color) => {
+// defaultTextColor が渡された場合はコンテナのデフォルト色として使う
+// （オプション画面は常に textColor を保存するため、これを「一律適用」と扱うと
+//   独自の色を持つ子要素が一切調整されなくなる）
+const applyAdjustedTextColors = (
+  container: HTMLElement,
+  bgColor: Color,
+  defaultTextColor?: Color
+) => {
   // 前回の調整をクリアしてからスタイルを適用
   clearAdjustedStyles(container);
-
-  if (overrideColor) {
-    // 手動指定がある場合は一律適用
-    container.style.setProperty(
-      "color",
-      `rgb(${overrideColor.r}, ${overrideColor.g}, ${overrideColor.b})`,
-      "important"
-    );
-    return;
-  }
 
   // デフォルト色をコンテナに設定
   // !important はコンテナ自身に対する Notion のルールに勝つためで、
   // 独自の color ルールを持つ子要素には影響しない（子は下で個別に調整する）
-  const defaultColor = getAccessibleTextColor(bgColor);
+  const defaultColor = defaultTextColor ?? getAccessibleTextColor(bgColor);
   container.style.setProperty(
     "color",
     `rgb(${defaultColor.r}, ${defaultColor.g}, ${defaultColor.b})`,
