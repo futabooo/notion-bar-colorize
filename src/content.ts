@@ -143,22 +143,22 @@ const changeSidebarColor = async () => {
       const { color, textColor } = condition;
       const rgbStr = `rgb(${color.r}, ${color.g}, ${color.b})`;
       bar.style.backgroundColor = rgbStr;
-
-      // sidebarを常に非表示としている場合の対応
-      let child = bar.children[1] as HTMLDivElement;
-      child.style.backgroundColor = rgbStr;
-
       applyAdjustedTextColors(bar, color, textColor);
+
+      // sidebarを常に非表示としている場合の対応（旧UIでは children[1] が本体）
+      // 新UIでは子要素の構成が異なるため存在チェックを行う
+      const child = bar.children[1] as HTMLElement | undefined;
+      if (child) child.style.backgroundColor = rgbStr;
     } else {
       // 設定がない場合はデフォルトの色に戻す
       const isDark = document.body.classList.contains("dark");
       const theme = isDark ? DARK_THEME : LIGHT_THEME;
       const rgbStr = `rgb(${theme.sidebar.r}, ${theme.sidebar.g}, ${theme.sidebar.b})`;
       bar.style.backgroundColor = rgbStr;
-      // sidebarを常に非表示としている場合の対応
-      let firstChild = bar.children[0] as HTMLDivElement;
-      firstChild.style.backgroundColor = rgbStr;
       applyAdjustedTextColors(bar, theme.sidebar, theme.text);
+      // sidebarを常に非表示としている場合の対応
+      const firstChild = bar.children[0] as HTMLElement | undefined;
+      if (firstChild) firstChild.style.backgroundColor = rgbStr;
     }
   }
 };
