@@ -13,7 +13,7 @@
     "@crxjs/vite-plugin": "^2.0.0-beta.28",
     "@playwright/test": "^1.49.1",
     "@types/chrome": "^0.2.0",
-    "@types/node": "^24.0.0",
+    "@types/node": "^24.12.0",
     "autoprefixer": "^10.4.20",
     "daisyui": "^5.0.27",
     "typescript": "^5.7.2",
