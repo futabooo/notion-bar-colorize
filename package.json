@@ -10,15 +10,15 @@
     "test:unit": "vitest run"
   },
   "devDependencies": {
-    "@crxjs/vite-plugin": "^2.0.0-beta.28",
-    "@playwright/test": "^1.49.1",
-    "@types/chrome": "^0.2.0",
-    "@types/node": "^24.0.0",
-    "autoprefixer": "^10.6.1",
-    "daisyui": "^5.5.18",
-    "typescript": "^5.7.2",
-    "vite": "^7.0.0",
-    "vitest": "^4.1.0"
+    "@crxjs/vite-plugin": "2.7.1",
+    "@playwright/test": "1.63.0",
+    "@types/chrome": "0.2.9",
+    "@types/node": "24.12.0",
+    "autoprefixer": "10.6.1",
+    "daisyui": "5.7.38",
+    "typescript": "5.9.3",
+    "vite": "7.3.6",
+    "vitest": "4.1.11"
   },
   "dependencies": {
     "@sentry/browser": "^10.74.0",
