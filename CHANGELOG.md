@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.1.6](https://github.com/futabooo/notion-bar-colorize/compare/1.1.5...1.1.6) - 2026-10-02
+
+- Update dependency autoprefixer to ^10.6.1 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/161
+- Update actions/deploy-pages action to v5 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/163
+- Update dependency daisyui to ^5.5.18 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/162
+- Pin dependencies by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/160
+- Update dependency daisyui to v5.7.46 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/165
+- Update Songmu/tagpr action to v1.21.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/168
+- Update dependency @sentry/browser to v10.75.3 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/166
+- Update dependency @types/chrome to v0.3.4 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/167
+
 ## [1.1.5](https://github.com/futabooo/notion-bar-colorize/compare/1.1.4...1.1.5) - 2026-09-13
 
 - Add optional Sentry error reporting by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/156
