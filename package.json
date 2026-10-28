@@ -18,7 +18,7 @@
     "daisyui": "5.7.48",
     "typescript": "5.9.3",
     "vite": "7.3.7",
-    "vitest": "4.1.11"
+    "vitest": "4.1.12"
   },
   "dependencies": {
     "@sentry/browser": "^10.74.0",
