@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.1.6](https://github.com/futabooo/notion-bar-colorize/compare/1.1.5...1.1.6) - 2026-10-30
+
+- Update dependency autoprefixer to ^10.6.1 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/161
+- Update actions/deploy-pages action to v5 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/163
+- Update dependency daisyui to ^5.5.18 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/162
+- Pin dependencies by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/160
+- Update dependency daisyui to v5.7.46 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/165
+- Update Songmu/tagpr action to v1.21.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/168
+- Update dependency @sentry/browser to v10.75.3 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/166
+- Update dependency @types/chrome to v0.3.4 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/167
+- Update dependency daisyui to v5.7.47 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/169
+- Update Songmu/tagpr action to v1.21.1 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/170
+- Update dependency @sentry/browser to v10.76.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/171
+- Update actions/setup-node action to v7 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/172
+- Update dependency @sentry/browser to v10.76.2 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/173
+- Update dependency @types/chrome to v0.3.5 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/174
+- Update dependency daisyui to v5.7.48 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/175
+- Update dependency vite to v7.3.7 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/176
+- Update actions/setup-node action to v7.1.0 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/180
+- Update dependency vitest to v4.1.12 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/178
+- Update dependency daisyui to v5.7.50 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/177
+- Update Songmu/tagpr action to v1.21.3 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/179
+- Update Node.js to v24.22.1 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/146
+- CI 系の Renovate PR をリリースノートから除外する by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/185
+- Update dependency @playwright/test to v1.64.1 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/182
+- Update dependency @types/chrome to v0.3.6 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/181
+- Update dependency autoprefixer to v10.6.2 by @renovate[bot] in https://github.com/futabooo/notion-bar-colorize/pull/183
+
 ## [1.1.5](https://github.com/futabooo/notion-bar-colorize/compare/1.1.4...1.1.5) - 2026-09-13
 
 - Add optional Sentry error reporting by @futabooo in https://github.com/futabooo/notion-bar-colorize/pull/156
