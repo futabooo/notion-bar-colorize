@@ -5,6 +5,13 @@
   "timezone": "Asia/Tokyo",
   "schedule": ["before 9am on friday"],
   "minimumReleaseAge": "7 days",
+  "packageRules": [
+    {
+      "description": "CI 系の更新は拡張の利用者に関係ないので ci ラベルを付けてリリースノートから除外する (.github/release.yml)",
+      "matchManagers": ["github-actions", "dockerfile", "devcontainer"],
+      "addLabels": ["ci"]
+    }
+  ],
   "vulnerabilityAlerts": {
     "enabled": true,
     "labels": ["dependencies", "security"],
